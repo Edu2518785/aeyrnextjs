@@ -6,6 +6,7 @@ import NuestrosProyectos from "@/components/NuestrosProyectos";
 import CountUp from 'react-countup';
 import "@/style/pagesStyle/Inicio.css";
 
+
 export default function Inicio() {
   const router = useRouter();
   const [activeIndex, setActiveIndex] = useState(2);

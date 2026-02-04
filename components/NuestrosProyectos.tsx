@@ -1,4 +1,5 @@
 'use client';
+
 import React, { useState } from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Navigation, Pagination, Autoplay } from 'swiper/modules';
@@ -8,11 +9,18 @@ import { motion, AnimatePresence } from 'framer-motion';
 import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
-import '../style/componentsStyle/NuestrosProyectos.css';
+import '@/style/componentsStyle/NuestrosProyectos.css';
 
-// Ya no importamos una por una para evitar el error "Module not found"
-// Las fotos se leen directamente desde la carpeta /public/assets/
-const proyectos = [
+// Interfaz para evitar el error de TS
+interface Proyecto {
+  id: number;
+  imgs: string[];
+  cliente: string;
+  titulo: string;
+  descripcion: string;
+}
+
+const proyectos: Proyecto[] = [
   { id: 1, imgs: ["/assets/inicio/dorue1.0.jpeg", "/assets/inicio/dorue1.1.jpeg", "/assets/inicio/dorue1.2.jpeg"], cliente: "BESCO", titulo: "Edificio Dorue", descripcion: "Instalación de tabiquería armada con bloques de concreto king block y placa sílico calcárea." },
   { id: 2, imgs: ["/assets/inicio/magnolia2.0.jpeg", "/assets/inicio/magnolia2.1.jpeg"], cliente: "MIRANDA", titulo: "Residencial Magnolia", descripcion: "Suministro y colocación de materiales certificados." },
   { id: 3, imgs: ["/assets/inicio/cantabrico3.jpeg"], cliente: "MIRANDA", titulo: "Obra Cantábrico", descripcion: "Ejecución de muros portantes y tabiquería." },
@@ -71,11 +79,12 @@ export default function NuestrosProyectos() {
                   navigation={p.imgs.length > 1}
                   pagination={p.imgs.length > 1 ? { clickable: true } : false}
                   loop={p.imgs.length > 1}
+                  autoplay={{ delay: 3000 }}
                   className="project-inner-swiper"
                 >
                   {p.imgs.map((foto, idx) => (
                     <SwiperSlide key={idx} onClick={() => handleOpen(foto)}>
-                      <img src={foto} alt={p.titulo} loading="lazy" />
+                      <img src={foto} alt={p.titulo} />
                     </SwiperSlide>
                   ))}
                 </Swiper>

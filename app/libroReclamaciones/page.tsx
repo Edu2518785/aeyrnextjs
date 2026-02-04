@@ -1,14 +1,31 @@
 'use client';
+
 import React, { useState } from "react";
 import { useRouter } from "next/navigation";
 import ReCAPTCHA from "react-google-recaptcha";
 import "../../style/pagesStyle/LibroReclamaciones.css";
 
+// 1. Definimos la interfaz completa para eliminar el error 'any' [cite: 2026-01-27]
+interface ReclamoForm {
+  nombre: string;
+  documento: string;
+  domicilio: string;
+  telefono: string;
+  email: string;
+  representante: string;
+  bienContratado: "PRODUCTO" | "SERVICIO";
+  tipoMoneda: "SOLES" | "DOLARES";
+  montoReclamado: string;
+  descripcionBien: string;
+  tipo: "RECLAMO" | "QUEJA";
+  detalle: string;
+  pedido: string;
+}
+
 export default function LibroReclamaciones() {
   const router = useRouter();
 
-  // Mantenemos tus nombres de campos exactos para que la API de Spring Boot no falle
-  const [form, setForm] = useState({
+  const [form, setForm] = useState<ReclamoForm>({
     nombre: "",
     documento: "",
     domicilio: "",
@@ -24,14 +41,18 @@ export default function LibroReclamaciones() {
     pedido: ""
   });
 
-  const [errors, setErrors] = useState<any>({});
+  // Tipado correcto para el estado de errores [cite: 2026-01-27]
+  const [errors, setErrors] = useState<Record<string, string | null>>({});
   const [loading, setLoading] = useState(false);
   const [captchaToken, setCaptchaToken] = useState<string | null>(null);
 
-  // Tipamos los parámetros para que TypeScript no dé error en el IDE
-  const handleChange = (key: string, value: string) => {
+  const handleChange = (key: keyof ReclamoForm, value: string) => {
     setForm({ ...form, [key]: value });
     if (errors[key]) setErrors({ ...errors, [key]: null });
+  };
+
+  const handleSalir = () => {
+    router.back(); // Reemplaza navigate(-1) de React Router
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -46,13 +67,17 @@ export default function LibroReclamaciones() {
     setLoading(true);
 
     try {
-      // Usamos tu URL de Railway original
       const response = await fetch(
         "https://apicontrucciones-production.up.railway.app/api/public/libro-reclamaciones",
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ ...form, captchaToken })
+          body: JSON.stringify({ 
+            ...form, 
+            captchaToken,
+            fechaEnvio: new Date().toLocaleDateString(), // Requerimiento anterior [cite: 2026-01-19]
+            horaEnvio: new Date().toLocaleTimeString() 
+          })
         }
       );
 
@@ -62,7 +87,6 @@ export default function LibroReclamaciones() {
         setErrors(data);
       } else {
         alert(`✔ Reclamo registrado correctamente\nN° ${data.numeroReclamo}`);
-        // Reset del form
         setForm({
           nombre: "", documento: "", domicilio: "", telefono: "", email: "",
           representante: "", bienContratado: "PRODUCTO", tipoMoneda: "SOLES",
@@ -80,11 +104,6 @@ export default function LibroReclamaciones() {
 
   return (
     <div className="reclamaciones-page">
-      {/* Usamos router.push('/') para el botón de volver */}
-      <button onClick={() => router.push('/')} className="btn-back-home" style={{cursor: 'pointer', background: 'none', border: 'none'}}>
-        VOLVER AL INICIO
-      </button>
-
       <div className="form-container-documento">
         <header className="header-indecopi">
           <div className="box-left">
@@ -124,6 +143,11 @@ export default function LibroReclamaciones() {
             />
           </div>
 
+          <div className="row-oficial">
+            <label>Domicilio</label>
+            <input value={form.domicilio} onChange={(e) => handleChange("domicilio", e.target.value)} />
+          </div>
+
           <div className="row-split">
             <div className="half-cell">
               <label>Teléfono</label>
@@ -135,24 +159,107 @@ export default function LibroReclamaciones() {
             </div>
           </div>
 
-          {/* ... El resto de tus campos se mantienen idénticos al original ... */}
-          
+          <div className="row-oficial">
+            <label>Representante</label>
+            <input value={form.representante} onChange={(e) => handleChange("representante", e.target.value)} />
+          </div>
+
+          <h2 className="table-header">2. BIEN CONTRATADO</h2>
+
+          <div className="radios-box">
+            <label>
+              <input
+                type="radio"
+                checked={form.bienContratado === "PRODUCTO"}
+                onChange={() => handleChange("bienContratado", "PRODUCTO")}
+              /> Producto
+            </label>
+            <label>
+              <input
+                type="radio"
+                checked={form.bienContratado === "SERVICIO"}
+                onChange={() => handleChange("bienContratado", "SERVICIO")}
+              /> Servicio
+            </label>
+          </div>
+
+          <div className="row-split">
+            <div className="half-cell">
+              <label>Moneda</label>
+              <select
+                value={form.tipoMoneda}
+                onChange={(e) => handleChange("tipoMoneda", e.target.value as "SOLES" | "DOLARES")}
+                className="select-moneda"
+              >
+                <option value="SOLES">S/</option>
+                <option value="DOLARES">USD</option>
+              </select>
+            </div>
+            <div className="half-cell">
+              <label>Monto</label>
+              <input
+                type="number"
+                step="0.01"
+                value={form.montoReclamado}
+                onChange={(e) => handleChange("montoReclamado", e.target.value)}
+              />
+            </div>
+          </div>
+
+          <div className="area-container">
+            <label>Descripción del bien</label>
+            <textarea value={form.descripcionBien} onChange={(e) => handleChange("descripcionBien", e.target.value)} />
+          </div>
+
           <h2 className="table-header">3. DETALLE DEL RECLAMO</h2>
+
+          <div className="row-type-select">
+            <label>
+              <input
+                type="radio"
+                checked={form.tipo === "RECLAMO"}
+                onChange={() => handleChange("tipo", "RECLAMO")}
+              /> RECLAMO
+            </label>
+            <label>
+              <input
+                type="radio"
+                checked={form.tipo === "QUEJA"}
+                onChange={() => handleChange("tipo", "QUEJA")}
+              /> QUEJA
+            </label>
+          </div>
+
           <div className="area-container">
             <label>Detalle</label>
             <textarea value={form.detalle} onChange={(e) => handleChange("detalle", e.target.value)} />
           </div>
 
-          <div className="captcha-container">
-            <ReCAPTCHA
-              sitekey={process.env.NEXT_PUBLIC_RECAPTCHA_KEY || "TU_SITE_KEY_AQUI"}
-              onChange={(token) => setCaptchaToken(token)}
-            />
+          <div className="area-container">
+            <label>Pedido</label>
+            <textarea value={form.pedido} onChange={(e) => handleChange("pedido", e.target.value)} />
           </div>
 
-          <button type="submit" className="btn-enviar-oficial" disabled={loading}>
-            {loading ? "ENVIANDO..." : "ENVIAR RECLAMO"}
-          </button>
+          <div className="captcha-container" style={{ padding: '20px', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+            <ReCAPTCHA
+              sitekey={process.env.NEXT_PUBLIC_RECAPTCHA_KEY || "6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI"}
+              onChange={(token) => setCaptchaToken(token)}
+            />
+            {errors.captcha && <span className="error-msg" style={{ color: 'red', fontSize: '0.8rem' }}>{errors.captcha}</span>}
+          </div>
+
+          <div className="button-group" style={{ display: 'flex' }}>
+            <button type="button" className="btn-enviar-oficial" style={{ background: '#555' }} onClick={handleSalir}>
+              SALIR
+            </button>
+            <button type="submit" className="btn-enviar-oficial" disabled={loading}>
+              {loading ? "ENVIANDO..." : "ENVIAR RECLAMO"}
+            </button>
+          </div>
+
+          <footer className="legales-pie">
+            * La empresa responderá en un plazo máximo de 15 días hábiles.
+          </footer>
         </form>
       </div>
     </div>

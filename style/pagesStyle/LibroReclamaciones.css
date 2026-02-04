@@ -1,0 +1,232 @@
+/* LibroReclamaciones.css */
+
+.reclamaciones-page {
+    background-color: #3a3a3a;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 60px 15px;
+    margin-top: 60px;
+    font-family: Arial, sans-serif;
+}
+
+/* Contenedor principal: ahora asegura el ancho máximo que pediste */
+.form-container-documento {
+    background: white;
+    width: 100%;
+    max-width: 850px; /* Mantenemos tu medida original */
+    border: 2px solid #000;
+    box-shadow: 0 20px 50px rgba(0,0,0,0.4);
+}
+
+/* Cabecera estilo INDECOPI */
+.header-indecopi {
+    display: flex;
+    border-bottom: 2px solid #000;
+}
+
+.box-left { 
+    flex: 1.5; 
+    background: #eee; 
+    border-right: 2px solid #000; 
+    padding: 15px; 
+    text-align: center; 
+}
+
+.box-right { 
+    flex: 1; 
+    padding: 15px; 
+    text-align: center; 
+}
+
+.box-left h1, .box-right h1 { 
+    font-size: 1.1rem; 
+    margin: 0; 
+    font-weight: 800; 
+    color: #000; 
+}
+
+.box-left p, .box-right p {
+    color: #000;
+    margin: 5px 0 0;
+    font-size: 0.9rem;
+}
+
+/* Información de la Empresa */
+.info-empresa { 
+    padding: 12px 15px; 
+    font-size: 0.85rem; 
+    border-bottom: 2px solid #000; 
+    color: #000; 
+    background: #fff;
+}
+
+.info-empresa p { margin: 2px 0; }
+
+/* Separadores de Sección Negros */
+.table-header {
+    background: #000; 
+    color: #fff;
+    font-size: 0.85rem; 
+    padding: 10px 15px; 
+    margin: 0;
+    text-transform: uppercase;
+}
+
+/* Filas del Formulario */
+.row-oficial, .row-split { 
+    display: flex; 
+    border-bottom: 1px solid #000; 
+}
+
+.row-oficial label, .half-cell label {
+    width: 180px; 
+    background: #f9f9f9;
+    padding: 10px; 
+    font-size: 0.75rem; 
+    font-weight: bold;
+    border-right: 1px solid #000; 
+    display: flex; 
+    align-items: center;
+    color: #000;
+}
+
+.row-oficial input, .half-cell input { 
+    flex: 1; 
+    border: none; 
+    padding: 10px; 
+    outline: none; 
+    color: #000; 
+    background: #fff;
+    font-size: 0.9rem;
+}
+
+.half-cell { flex: 1; display: flex; }
+.half-cell:first-child { border-right: 1px solid #000; }
+
+/* Select de Moneda */
+.select-moneda { 
+    border: none; 
+    background: #eee; 
+    font-weight: bold; 
+    padding: 0 10px; 
+    border-right: 1px solid #000; 
+    cursor: pointer;
+    color: #000;
+}
+
+/* Áreas de Texto (Descripción, Detalle, Pedido) */
+.area-container { border-bottom: 1px solid #000; }
+
+.area-container label { 
+    display: block; 
+    background: #eee; 
+    padding: 5px 15px; 
+    font-size: 0.75rem; 
+    border-bottom: 1px solid #000; 
+    font-weight: bold; 
+    color: #000;
+}
+
+.area-container textarea { 
+    width: 100%; 
+    height: 110px; 
+    border: none; 
+    padding: 10px; 
+    resize: none; 
+    outline: none; 
+    display: block; 
+    box-sizing: border-box; 
+    color: #000;
+    background: #fff;
+    font-family: inherit;
+}
+
+/* Boxes de Radio Buttons */
+.radios-box, .row-type-select { 
+    padding: 10px 15px; 
+    display: flex; 
+    gap: 20px; 
+    font-size: 0.8rem; 
+    background: #fff; 
+    border-bottom: 1px solid #000; 
+    color: #000; 
+}
+
+.radios-box label, .row-type-select label { 
+    background: none; 
+    border: none; 
+    width: auto; 
+    padding: 0; 
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    cursor: pointer;
+}
+
+/* Grupo de Botones Finales */
+.button-group {
+    display: flex;
+    width: 100%;
+}
+
+.btn-enviar-oficial {
+    flex: 1;
+    background: #000; 
+    color: white;
+    padding: 20px; 
+    font-weight: bold; 
+    border: none; 
+    cursor: pointer; 
+    font-size: 1.1rem;
+    transition: background 0.3s;
+    text-transform: uppercase;
+}
+
+.btn-enviar-oficial:hover { background: #d32f2f; }
+
+.btn-enviar-oficial:disabled {
+    background: #666;
+    cursor: not-allowed;
+}
+
+/* Footer del Formulario */
+.legales-pie { 
+    padding: 15px; 
+    font-size: 0.7rem; 
+    color: #555; 
+    background: #f9f9f9;
+    text-align: center;
+}
+
+/* Clases de Error (Para el tipado de TypeScript) */
+.input-error {
+    background: #fff0f0 !important;
+    box-shadow: inset 0 0 0 1px red;
+}
+
+.error-msg {
+    color: red;
+    font-size: 0.75rem;
+    font-weight: bold;
+    margin-top: 5px;
+}
+
+.captcha-container {
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background: #f9f9f9;
+    border-bottom: 1px solid #000;
+}
+
+/* Ajuste para dispositivos móviles */
+@media (max-width: 600px) {
+    .header-indecopi { flex-direction: column; }
+    .box-left { border-right: none; border-bottom: 2px solid #000; }
+    .row-oficial, .row-split { flex-direction: column; }
+    .row-oficial label, .half-cell label { width: 100%; border-right: none; border-bottom: 1px solid #000; }
+    .half-cell:first-child { border-right: none; }
+}

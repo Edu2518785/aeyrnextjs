@@ -45,8 +45,8 @@ export default function Footer() {
             <p className="legal-desc">Comprometidos con la transparencia y excelencia en cada proyecto.</p>
             
             <div className="libro-box-oficial">
-              {/* Ruta corregida a public para el Libro de Reclamaciones */}
-              <Link href="/libro-reclamaciones" className="libro-flex">
+              {/* CORRECCIÓN DE RUTA: Apuntamos al nombre de la carpeta únicamente */}
+              <Link href="/libroReclamaciones" className="libro-flex">
                 <img src="/assets/libroReclamaciones.jpg" alt="Libro de Reclamaciones Oficial" className="img-libro-final" />
                 <div className="libro-separator"></div>
                 <div className="libro-txt">
