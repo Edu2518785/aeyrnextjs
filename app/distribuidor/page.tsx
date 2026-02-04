@@ -11,7 +11,17 @@ import 'swiper/css/navigation';
 import 'swiper/css/pagination';
 import "../../style/pagesStyle/Distribuidor.css";
 
-const listaProductos = [
+// Definimos la interfaz para que TypeScript no de errores de tipo
+interface Producto {
+  id: number;
+  nombre: string;
+  imagen: string; // Nombre correcto según tu array
+  categoria: string;
+  descripcion: string;
+  ficha: string;
+}
+
+const listaProductos: Producto[] = [
   { id: 1, nombre: "Ladrillo Unicon B9", imagen: "/assets/productos/b9.jpg", categoria: "Ladrillos", descripcion: "Bloque de concreto de alta resistencia ideal para muros portantes.", ficha: "/Documents/B9.pdf" },
   { id: 2, nombre: "Ladrillo Unicon B12", imagen: "/assets/productos/b12.jpg", categoria: "Ladrillos", descripcion: "Solución versátil para edificaciones seguras y duraderas.", ficha: "/Documents/B12.pdf" },
   { id: 3, nombre: "Ladrillo Unicon B14", imagen: "/assets/productos/b14.jpg", categoria: "Ladrillos", descripcion: "Dimensiones optimizadas para una construcción más rápida.", ficha: "/Documents/B14.pdf" },
@@ -59,7 +69,8 @@ export default function Distribuidor() {
         <section className="productos-grid">
           {productosFiltrados.map((prod) => (
             <article key={prod.id} className="card-producto">
-              <div className="img-wrapper"><img src={prod.image} alt={prod.nombre} /></div>
+              {/* CORRECCIÓN AQUÍ: Cambiado prod.image por prod.imagen */}
+              <div className="img-wrapper"><img src={prod.imagen} alt={prod.nombre} /></div>
               <div className="card-content">
                 <span className="categoria-label">{prod.categoria}</span>
                 <h3>{prod.nombre}</h3>
