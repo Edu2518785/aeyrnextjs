@@ -1,0 +1,263 @@
+/* =========================================
+   CONTENEDOR PRINCIPAL (ELIMINANDO DOBLE SCROLL)
+   ========================================= */
+.experiencia-page {
+    background-color: #f9f9f9;
+    /* CAMBIO CLAVE: Quitamos overflow-x: hidden si ya lo tienes en index.css/body */
+    /* Aseguramos que el contenedor no bloquee el scroll natural */
+    width: 100%;
+    min-height: 100vh;
+    display: block;
+    position: relative;
+}
+
+.full-width-banner {
+    position: relative;
+    /* 90vh es excelente, pero asegúrate de que el contenedor padre no tenga padding-top */
+    height: 90vh;
+    min-height: 400px;
+    background: url('/assets/inicio/fondoAyuda.jpg') center/cover no-repeat fixed;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    color: white;
+    /* Evita que el banner se salga de los límites */
+    overflow: hidden; 
+}
+
+.banner-overlay {
+    /* Mantenemos tu diseño pero aseguramos que ocupe el área sin desbordar */
+    background: rgba(0, 0, 0, 0.5);
+    width: 100%;
+    /* AJUSTE PARA PREVENIR DESBORDE: min-height en vez de height fijo */
+    min-height: 50%;
+    height: auto; 
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 30px 20px;
+    box-sizing: border-box; /* Crucial para que el padding no sume tamaño extra */
+}
+
+.banner-overlay h1 {
+    font-size: clamp(2.5rem, 6vw, 4.5rem);
+    font-weight: 800;
+    text-transform: uppercase;
+    margin-bottom: 1rem;
+    letter-spacing: 2px;
+}
+
+.banner-overlay p {
+    font-size: 1.4rem;
+    font-weight: 300;
+    max-width: 800px;
+    border-left: 4px solid #ff4d4d;
+    padding-left: 20px;
+}
+
+/* =========================================
+   DISEÑO DE TÍTULOS (ESTILO INICIO)
+   ========================================= */
+.text-center-header {
+    text-align: center;
+    margin-bottom: 60px;
+}
+
+/* El subtítulo dorado pequeño */
+.section-tag {
+    display: block;
+    color: var(--gold-ae);
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    font-size: 0.9rem;
+    margin-bottom: 10px;
+}
+
+/* Tu título original con el ajuste de margen */
+.gallery-title {
+    text-align: center;
+    font-size: 2.8rem; /* Un poco más grande para que impacte */
+    font-weight: 900;
+    margin-bottom: 15px; /* Reducido porque ahora hay subrayado */
+    text-transform: uppercase;
+    color: var(--dark-ae);
+}
+
+/* La línea naranja centrada debajo del título */
+.title-underline-center {
+    width: 80px;
+    height: 4px;
+    background: var(--gold-ae);
+    margin: 0 auto;
+    position: relative;
+}
+
+/* Pequeño adorno opcional: un punto que se mueve o un brillo */
+.title-underline-center::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 10px;
+    height: 100%;
+    background: white;
+    opacity: 0.5;
+}
+
+/* =========================================
+   GALERÍA FULL WIDTH (EXTREMO A EXTREMO)
+   ========================================= */
+.proyectos-gallery {
+    padding: 80px 0;
+    width: 100%; 
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* ELIMINAMOS LOS HUECOS AZULES FORZANDO EL ANCHO */
+.gallery-grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr); /* 5 columnas iguales */
+    gap: 0; /* Pegadas de lado a lado */
+    width: 100vw; /* Ancho total de ventana */
+    margin: 0;
+    padding: 0;
+    /* Rompe cualquier contenedor padre */
+    position: relative;
+    left: 50%;
+    right: 50%;
+    margin-left: -50vw;
+    margin-right: -50vw;
+}
+
+/* =========================================
+   TARJETAS DE PROYECTO (DISEÑO MAXIMIZADO)
+   ========================================= */
+.proyecto-card {
+    background: white;
+    border-radius: 0; /* Sin bordes para encaje perfecto */
+    overflow: hidden;
+    transition: all 0.4s ease;
+    display: flex;
+    flex-direction: column;
+    border: 0.1px solid rgba(0,0,0,0.05);
+}
+
+.image-box {
+    position: relative;
+    height: 500px; /* Fotos imponentes y verticales */
+    overflow: hidden;
+}
+
+.image-box img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.8s cubic-bezier(0.2, 1, 0.3, 1);
+}
+
+.proyecto-card:hover .image-box img {
+    transform: scale(1.1);
+}
+
+.card-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(to bottom, transparent 30%, rgba(0,0,0,0.9));
+    opacity: 0;
+    transition: opacity 0.4s ease;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    padding: 30px;
+    cursor: pointer;
+}
+
+.proyecto-card:hover .card-overlay {
+    opacity: 1;
+}
+
+.project-number {
+    color: #ff4d4d;
+    font-weight: 900;
+    font-size: 2.2rem;
+    margin-bottom: 5px;
+}
+
+.info-box {
+    padding: 20px;
+    background: white;
+}
+
+/* =========================================
+   SWIPER CONTROLS
+   ========================================= */
+/* Oculta las flechas automáticamente cuando Swiper añade la clase 'disabled' */
+.swiper-button-disabled {
+    display: none !important;
+}
+
+/* Evita que los puntos de paginación aparezcan si solo hay un slide */
+.swiper-pagination-lock {
+    display: none !important;
+}
+
+/* Ajuste de cursor: si no hay carrusel, que no parezca que se puede arrastrar */
+.project-inner-swiper:not(.swiper-initialized) .swiper-slide,
+.swiper-button-disabled ~ .swiper-wrapper {
+    cursor: default;
+}
+
+.project-inner-swiper {
+    width: 100%;
+    height: 100%;
+}
+
+/* =========================================
+   RESPONSIVIDAD
+   ========================================= */
+@media (max-width: 1600px) {
+    .image-box { height: 420px; }
+}
+
+@media (max-width: 1200px) {
+    .gallery-grid { grid-template-columns: repeat(3, 1fr); }
+}
+
+@media (max-width: 768px) {
+    .gallery-grid { grid-template-columns: repeat(2, 1fr); }
+    .diagonal-wrapper { height: auto; flex-direction: column; transform: none; margin-left: 0; }
+    .diagonal-content { transform: none; }
+}
+
+@media (max-width: 480px) {
+    .gallery-grid { grid-template-columns: 1fr; }
+    .image-box { height: 350px; }
+}
+
+/* REGLA DE ORO PARA CELULAR HORIZONTAL - Evita que la letra se salga */
+@media (max-height: 500px) and (orientation: landscape) {
+    .full-width-banner {
+        height: auto;
+        min-height: 100vh;
+        padding: 40px 0;
+    }
+    .banner-overlay {
+        min-height: 100%;
+        padding: 20px;
+    }
+    .banner-overlay h1 {
+        font-size: 2rem;
+    }
+    .banner-overlay p {
+        font-size: 1rem;
+    }
+}

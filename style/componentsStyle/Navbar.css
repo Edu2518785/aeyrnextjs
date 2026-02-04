@@ -1,0 +1,146 @@
+/* ================== CSS NAVBAR AE&R ================== */
+:root {
+  --aer-orange: #FF8C00;
+  --nav-bg: rgba(255, 255, 255, 0.336);
+}
+
+.navbar-floating {
+  position: fixed;
+  top: 25px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 90%;
+  max-width: 1200px;
+  height: 75px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 40px;
+  z-index: 1000;
+  background: var(--nav-bg);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.30);
+  border-radius: 14px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+}
+
+.logo-text {
+  font-size: 1.7rem;
+  font-weight: 900;
+  color: #000;
+  letter-spacing: 1.5px;
+  cursor: pointer;
+}
+
+.logo-text::after {
+  content: " CG SAC";
+  font-size: 0.6rem;
+  color: var(--aer-orange);
+  display: block;
+  margin-top: -4px;
+  letter-spacing: 2px;
+}
+
+.navbar-links {
+  display: flex;
+  list-style: none;
+  gap: 35px;
+}
+
+/* En Next.js, los estilos se aplican a la etiqueta <a> que genera el componente Link */
+.navbar-links a {
+  text-decoration: none;
+  color: rgba(0, 0, 0, 0.75);
+  font-size: 0.85rem;
+  letter-spacing: 1.2px;
+  text-transform: uppercase;
+  font-weight: 500;
+  position: relative;
+  transition: color 0.3s ease, font-weight 0.2s ease, transform 0.2s ease;
+}
+
+.navbar-links a::after {
+  content: "";
+  position: absolute;
+  width: 0;
+  height: 3px;
+  bottom: -6px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--aer-orange);
+  border-radius: 2px;
+  transition: width 0.3s ease;
+}
+
+.navbar-links a:hover {
+  color: #000;
+  font-weight: 700;
+  transform: translateY(-1px);
+}
+
+.navbar-links a:hover::after,
+.navbar-links a.active::after {
+  width: 100%;
+}
+
+.navbar-links a.active {
+  color: #000;
+  font-weight: 700;
+}
+
+/* ============ HAMBURGER ============ */
+.hamburger {
+  display: none;
+  flex-direction: column;
+  gap: 6px;
+  cursor: pointer;
+}
+
+.hamburger span {
+  width: 26px;
+  height: 3px;
+  background: #000;
+  border-radius: 2px;
+  transition: all 0.3s ease;
+}
+
+.hamburger.active span:nth-child(1) {
+  transform: rotate(45deg) translate(5px, 6px);
+}
+
+.hamburger.active span:nth-child(2) {
+  opacity: 0;
+}
+
+.hamburger.active span:nth-child(3) {
+  transform: rotate(-45deg) translate(6px, -6px);
+}
+
+/* ============ RESPONSIVE ============ */
+@media (max-width: 768px) {
+  .hamburger {
+    display: flex;
+  }
+
+  .navbar-links {
+    position: absolute;
+    top: 90px;
+    right: 20px;
+    flex-direction: column;
+    background: rgba(255, 255, 255, 0.95);
+    padding: 20px 30px;
+    border-radius: 12px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.25);
+    gap: 20px;
+    opacity: 0;
+    pointer-events: none;
+    transform: translateY(-10px);
+    transition: all 0.3s ease;
+  }
+
+  .navbar-links.open {
+    opacity: 1;
+    pointer-events: auto;
+    transform: translateY(0);
+  }
+}

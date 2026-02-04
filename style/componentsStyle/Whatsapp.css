@@ -1,0 +1,33 @@
+/* style/componentsStyle/Whatsapp.css */
+.whatsapp-float-left {
+  position: fixed !important; /* Fuerza la posición */
+  bottom: 30px !important;
+  right: 30px !important; 
+  left: auto !important;
+  
+  z-index: 999999 !important; /* Por encima de TODO */
+  background-color: #25d366;
+  color: white !important;
+  padding: 12px 22px;
+  border-radius: 15px 15px 5px 15px;
+  
+  display: flex !important; /* Si no tiene display flex, el contenido no se alinea */
+  align-items: center;
+  gap: 12px;
+  text-decoration: none !important;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+  visibility: visible !important;
+  opacity: 1 !important;
+}
+
+.whatsapp-icon {
+  font-size: 2rem;
+  color: white;
+}
+
+.whatsapp-label {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.2;
+  text-align: right;
+}

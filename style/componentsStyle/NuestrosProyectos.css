@@ -1,0 +1,182 @@
+/* =========================================
+   CONTENEDOR PRINCIPAL Y REJILLA (NEXT.JS)
+   ========================================= */
+.proyectos-gallery {
+    padding: 100px 0;
+    width: 100%; 
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: #f8fafc;
+    overflow-x: hidden;
+}
+
+.gallery-grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr); 
+    gap: 0; 
+    width: 100vw; 
+    position: relative;
+    left: 50%;
+    right: 50%;
+    margin-left: -50vw;
+    margin-right: -50vw;
+}
+
+.proyecto-card {
+    background: white;
+    border-radius: 0; 
+    display: flex;
+    flex-direction: column;
+    border: 0.5px solid rgba(0,0,0,0.05);
+}
+
+/* =========================================
+   SOLUCIÓN AL DESBORDE DE IMAGEN (ZOOM)
+   ========================================= */
+.image-box {
+    position: relative;
+    height: 500px; 
+    background: #0f172a;
+    overflow: hidden; /* Primer nivel de corte */
+}
+
+.project-inner-swiper {
+    width: 100%;
+    height: 100%;
+}
+
+/* Forzamos a cada slide a ser un contenedor cerrado */
+.project-inner-swiper .swiper-slide {
+    overflow: hidden !important; /* SEGUNDO NIVEL DE CORTE: Vital para que no se vea la vecina */
+    width: 100%;
+    height: 100%;
+}
+
+.project-inner-swiper img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; 
+    object-position: center;
+    cursor: pointer;
+    transition: transform 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    display: block;
+}
+
+/* El zoom ahora solo ocurre dentro del SwiperSlide actual */
+.proyecto-card:hover .project-inner-swiper img {
+    transform: scale(1.1); 
+}
+
+/* =========================================
+   OVERLAY E INFORMACIÓN
+   ========================================= */
+.card-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(to bottom, transparent 50%, rgba(15, 23, 42, 0.8));
+    opacity: 0;
+    transition: opacity 0.4s ease;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    padding: 30px;
+    z-index: 5;
+    pointer-events: none; 
+}
+
+.proyecto-card:hover .card-overlay {
+    opacity: 1;
+}
+
+.project-number {
+    color: #ff8a00;
+    font-weight: 900;
+    font-size: 2.2rem;
+}
+
+.info-box {
+    padding: 25px;
+    background: white;
+    border-top: 1px solid #eee;
+}
+
+.info-box h3 {
+    font-size: 1.2rem;
+    font-weight: 800;
+    color: #0f172a;
+    margin-bottom: 10px;
+    text-transform: uppercase;
+}
+
+/* =========================================
+   CONTROLES SWIPER (FLECHAS)
+   ========================================= */
+.swiper-button-next, .swiper-button-prev {
+    color: #ffffff !important;
+    background: rgba(255, 138, 0, 0.9);
+    width: 35px !important;
+    height: 35px !important;
+    border-radius: 5px;
+    transform: scale(0.6);
+    z-index: 10;
+}
+
+/* =========================================
+   MODAL DE IMAGEN (FULL SCREEN)
+   ========================================= */
+.modal-ae-full {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(10, 15, 28, 0.98);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 99999; 
+    cursor: zoom-out;
+}
+
+.modal-img-grande {
+    max-width: 90%;
+    max-height: 90vh;
+    object-fit: contain;
+    border: 2px solid #ff8a00;
+    box-shadow: 0 0 50px rgba(0,0,0,0.8);
+}
+
+.modal-close-btn {
+    position: absolute;
+    top: 20px;
+    right: 40px;
+    background: none;
+    border: none;
+    color: white;
+    font-size: 60px;
+    cursor: pointer;
+}
+
+/* =========================================
+   RESPONSIVIDAD (Mantenida exactamente)
+   ========================================= */
+@media (max-width: 1400px) { 
+    .gallery-grid { grid-template-columns: repeat(4, 1fr); } 
+}
+
+@media (max-width: 1100px) { 
+    .gallery-grid { grid-template-columns: repeat(3, 1fr); } 
+    .image-box { height: 400px; } 
+}
+
+@media (max-width: 768px) { 
+    .gallery-grid { grid-template-columns: repeat(2, 1fr); } 
+}
+
+@media (max-width: 480px) { 
+    .gallery-grid { grid-template-columns: 1fr; } 
+}

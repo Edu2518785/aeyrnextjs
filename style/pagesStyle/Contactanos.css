@@ -1,0 +1,201 @@
+/* ==========================================================================
+   1. VARIABLES Y CONFIGURACIÓN BASE
+   ========================================================================== */
+:root {
+  --aer-blue-deep: #0f172a;      /* Azul corporativo profundo */
+  --aer-orange: #f59e0b;         /* Naranja de acción */
+  --aer-orange-hover: #d97706;
+  --aer-white: #ffffff;
+}
+
+.contact-full-wrapper {
+  width: 100%;
+  height: 100vh;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  /* Ruta ajustada para Next.js (apuntando a public/assets/hero/ban2.jpg) */
+  background: url('/assets/hero/ban2.jpg') center/cover no-repeat;
+  overflow: hidden;
+}
+
+/* OVERLAY PROFESIONAL */
+.contact-bg-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    135deg, 
+    rgba(15, 23, 42, 0.9) 0%, 
+    rgba(15, 23, 42, 0.6) 100%
+  );
+  z-index: 1;
+}
+
+/* ==========================================================================
+   2. CONTENIDO PRINCIPAL (DESKTOP)
+   ========================================================================== */
+.contact-main-content {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  max-width: 1200px;
+  padding: 0 40px;
+  margin-top: 80px; /* Margen base para el Navbar */
+}
+
+.contact-info-glass {
+  max-width: 700px;
+}
+
+.contact-badge {
+  display: inline-block;
+  color: var(--aer-orange);
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 3px;
+  font-size: 0.9rem;
+  margin-bottom: 20px;
+  border-left: 3px solid var(--aer-orange);
+  padding-left: 15px;
+}
+
+.contact-hero-title {
+  font-size: clamp(2.5rem, 5vw, 4.5rem);
+  color: var(--aer-white);
+  font-weight: 900;
+  line-height: 1.1;
+  margin-bottom: 25px;
+}
+
+.contact-hero-title span {
+  color: var(--aer-orange);
+  /* Efecto de borde en la palabra Proyectos */
+  -webkit-text-fill-color: transparent;
+  -webkit-text-stroke: 1px var(--aer-orange);
+}
+
+.contact-hero-sub {
+  font-size: 1.2rem;
+  color: #cbd5e1;
+  line-height: 1.6;
+  margin-bottom: 45px;
+  max-width: 550px;
+}
+
+/* ==========================================================================
+   3. BOTONES Y ELEMENTOS LEGALES
+   ========================================================================== */
+.btn-premium-quote {
+  background-color: var(--aer-orange);
+  color: var(--aer-white);
+  border: none;
+  padding: 22px 45px;
+  border-radius: 4px;
+  font-weight: 800;
+  font-size: 1rem;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  cursor: pointer;
+  transition: all 0.4s ease;
+  box-shadow: 0 10px 25px rgba(245, 158, 11, 0.3);
+}
+
+.btn-premium-quote:hover {
+  background-color: var(--aer-orange-hover);
+  transform: translateX(10px);
+  box-shadow: 0 15px 35px rgba(245, 158, 11, 0.4);
+}
+
+.contact-legal-link {
+  position: absolute;
+  bottom: -100px;
+  left: 0;
+}
+
+.btn-minimal-legal {
+  background: none;
+  border: none;
+  color: rgba(255, 255, 255, 0.5);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
+  font-size: 0.85rem;
+  transition: color 0.3s;
+  text-decoration: none;
+}
+
+.btn-minimal-legal:hover {
+  color: var(--aer-orange);
+}
+
+/* ==========================================================================
+   4. RESPONSIVE - VERTICAL (MOBILE PORTRAIT)
+   ========================================================================== */
+@media (max-width: 768px) {
+  .contact-main-content {
+    margin-top: 100px; /* Espacio extra para el logo del navbar */
+    padding: 0 25px;
+  }
+  .contact-hero-title {
+    font-size: 2.8rem;
+  }
+  .btn-premium-quote {
+    width: 100%;
+    justify-content: center;
+    padding: 18px 30px;
+  }
+  .contact-legal-link {
+    bottom: -80px;
+  }
+}
+
+/* ==========================================================================
+   5. RESPONSIVE - HORIZONTAL (MOBILE LANDSCAPE)
+   ========================================================================== */
+@media (max-height: 500px) and (orientation: landscape) {
+  .contact-main-content {
+    /* 1. Bajamos el contenido para que no choque con el Navbar transparente */
+    margin-top: 140px !important; 
+    padding-bottom: 50px;
+  }
+
+  .contact-info-glass {
+    max-width: 100%; /* Aprovecha el ancho de la pantalla */
+  }
+
+  .contact-hero-title {
+    /* 2. Reducimos tamaño para que quepa en la altura del celular */
+    font-size: 1.8rem !important;
+    margin-bottom: 15px !important;
+  }
+
+  .contact-hero-sub {
+    /* 3. Reducimos el subtexto para que el botón suba */
+    font-size: 0.95rem !important;
+    margin-bottom: 25px !important;
+    max-width: 80%;
+  }
+
+  .contact-badge {
+    font-size: 0.75rem !important;
+    margin-bottom: 10px !important;
+  }
+
+  .btn-premium-quote {
+    /* 4. Botón más compacto en horizontal */
+    width: fit-content !important;
+    padding: 12px 30px !important;
+    font-size: 0.9rem !important;
+  }
+
+  .contact-legal-link {
+    /* 5. Asegura que el libro de reclamaciones no desaparezca */
+    position: relative !important;
+    bottom: 0 !important;
+    margin-top: 30px;
+    padding-bottom: 20px;
+  }
+}
